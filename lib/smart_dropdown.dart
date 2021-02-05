@@ -3,8 +3,8 @@ library smart_dropdown;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
-class CustomDropDown<T> extends StatefulWidget {
-  final List<CustomDropdownMenuItem> items;
+class SmartDropDown<T> extends StatefulWidget {
+  final List<SmartDropdownMenuItem> items;
   final Function onChanged;
   final String hintText;
   final double borderRadius;
@@ -16,7 +16,7 @@ class CustomDropDown<T> extends StatefulWidget {
   final bool enabled;
   final Key key;
 
-  CustomDropDown(
+  SmartDropDown(
       {this.items,
       this.onChanged,
       this.hintText = "",
@@ -31,10 +31,10 @@ class CustomDropDown<T> extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CustomDropDownState createState() => _CustomDropDownState();
+  _SmartDropDownState createState() => _SmartDropDownState();
 }
 
-class _CustomDropDownState extends State<CustomDropDown>
+class _SmartDropDownState extends State<SmartDropDown>
     with WidgetsBindingObserver {
   bool _isOpen = false, _isAnyItemSelected = false, _isReverse = false;
   OverlayEntry _overlayEntry;
@@ -148,7 +148,8 @@ class _CustomDropDownState extends State<CustomDropDown>
                                               _isAnyItemSelected = true;
                                               _itemSelected = item.child;
                                               _removeOverlay();
-                                              widget.onChanged(item.value);
+                                              if (widget.onChanged != null)
+                                                widget.onChanged(item.value);
                                             });
                                           }
                                         },
@@ -315,11 +316,11 @@ class _CustomDropDownState extends State<CustomDropDown>
   }
 }
 
-class CustomDropdownMenuItem<T> extends StatelessWidget {
+class SmartDropdownMenuItem<T> extends StatelessWidget {
   final T value;
   final Widget child;
 
-  CustomDropdownMenuItem({@required this.value, @required this.child});
+  SmartDropdownMenuItem({@required this.value, @required this.child});
 
   @override
   Widget build(BuildContext context) {
