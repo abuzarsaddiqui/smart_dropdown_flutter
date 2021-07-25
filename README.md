@@ -7,7 +7,7 @@ Add this line to your pubspec.yaml:
 
 ```bash
 dependencies:
-  smart_dropdown: ^0.0.1
+  smart_dropdown: ^1.0.0
 ```
 Then run this command:
 ```bash

@@ -14,11 +14,11 @@ class SmartDropDown<T> extends StatefulWidget {
   final Color expandedColor;
   final int defaultSelectedIndex;
   final bool enabled;
-  final Key key;
+  final Key? key;
 
   SmartDropDown(
-      {this.items,
-      this.onChanged,
+      {required this.items,
+      required this.onChanged,
       this.hintText = "",
       this.borderRadius = 0,
       this.borderWidth = 1,
@@ -37,15 +37,15 @@ class SmartDropDown<T> extends StatefulWidget {
 class _SmartDropDownState extends State<SmartDropDown>
     with WidgetsBindingObserver {
   bool _isOpen = false, _isAnyItemSelected = false, _isReverse = false;
-  OverlayEntry _overlayEntry;
-  RenderBox _renderBox;
-  Widget _itemSelected = null;
-  Offset dropDownOffset;
+  late OverlayEntry _overlayEntry;
+  late RenderBox? _renderBox;
+  Widget? _itemSelected = null;
+  late Offset dropDownOffset;
   final LayerLink _layerLink = LayerLink();
 
   @override
   void initState() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
       if (mounted) {
         setState(() {
           dropDownOffset = getOffset();
@@ -65,7 +65,7 @@ class _SmartDropDownState extends State<SmartDropDown>
         }
       }
     });
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     super.initState();
   }
 
@@ -77,7 +77,7 @@ class _SmartDropDownState extends State<SmartDropDown>
     }
 
     this._overlayEntry = this._createOverlayEntry();
-    Overlay.of(context).insert(_overlayEntry);
+    Overlay.of(context)!.insert(_overlayEntry);
   }
 
   void _removeOverlay() {
@@ -91,17 +91,17 @@ class _SmartDropDownState extends State<SmartDropDown>
 
   @override
   dispose() {
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
   OverlayEntry _createOverlayEntry() {
-    _renderBox = context.findRenderObject();
+    _renderBox = context.findRenderObject() as RenderBox?;
 
-    var size = _renderBox.size;
+    var size = _renderBox!.size;
 
     if (dropDownOffset == null) {
-      dropDownOffset = Offset(0, _renderBox.size.height);
+      dropDownOffset = Offset(0, _renderBox!.size.height);
     }
     if (dropDownOffset != null) {
       dropDownOffset = getOffset();
@@ -167,8 +167,8 @@ class _SmartDropDownState extends State<SmartDropDown>
   }
 
   Offset getOffset() {
-    RenderBox renderBox = context.findRenderObject();
-    double y = renderBox.localToGlobal(Offset.zero).dy;
+    RenderBox? renderBox = context.findRenderObject() as RenderBox?;
+    double y = renderBox!.localToGlobal(Offset.zero).dy;
     double spaceAvailable = _getAvailableSpace(y + renderBox.size.height);
     if (spaceAvailable > widget.maxListHeight) {
       _isReverse = false;
@@ -196,7 +196,7 @@ class _SmartDropDownState extends State<SmartDropDown>
   Widget build(BuildContext context) {
     return Theme(
       data:
-          ThemeData(textTheme: TextTheme(body1: TextStyle(color: Colors.grey))),
+          ThemeData(textTheme: TextTheme(bodyText2: TextStyle(color: Colors.grey))),
       child: CompositedTransformTarget(
         link: this._layerLink,
         child: GestureDetector(
@@ -214,7 +214,7 @@ class _SmartDropDownState extends State<SmartDropDown>
                 Flexible(
                   flex: 3,
                   child: _isAnyItemSelected
-                      ? _itemSelected
+                      ? _itemSelected!
                       : Padding(
                           padding: const EdgeInsets.only(
                               left: 4.0), // change it here
@@ -247,7 +247,7 @@ class _SmartDropDownState extends State<SmartDropDown>
         color: widget.expandedColor);
   }
 
-  Decoration _getDecoration() {
+  Decoration? _getDecoration() {
     if (_isOpen && !_isReverse) {
       return BoxDecoration(
           border: Border.all(
@@ -280,7 +280,7 @@ class _SmartDropDownState extends State<SmartDropDown>
     }
   }
 
-  Decoration _getListDecoration() {
+  Decoration? _getListDecoration() {
     if (_isOpen && !_isReverse) {
       return BoxDecoration(
           border: Border(
@@ -320,7 +320,7 @@ class SmartDropdownMenuItem<T> extends StatelessWidget {
   final T value;
   final Widget child;
 
-  SmartDropdownMenuItem({@required this.value, @required this.child});
+  SmartDropdownMenuItem({required this.value, required this.child});
 
   @override
   Widget build(BuildContext context) {

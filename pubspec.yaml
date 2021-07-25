@@ -1,11 +1,11 @@
 name: smart_dropdown
 description: A Flutter package that provides a more presentable way to show dropdown to the mobile users
-version: 0.0.1
+version: 1.0.0
 author: Abuzar Saddiqui
 homepage: https://github.com/abuzarsaddiqui/smart_dropdown_flutter
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:

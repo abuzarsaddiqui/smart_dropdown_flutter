@@ -52,13 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: SizedBox(
-          height: 30, width: 300,
+          height: 40, width: 300,
           child: SmartDropDown(
             items: items,
             hintText: "Smart Dropdown Demo",
             borderRadius: 5,
             borderColor: Theme.of(context).primaryColor,
             expandedColor: Theme.of(context).primaryColor,
+            onChanged: (val){
+              print(val);
+            },
           ),
         ),
       ),
